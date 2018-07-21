@@ -1,0 +1,51 @@
+class Solution:
+    currRow=0
+    currCol=0
+    def printTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[str]]
+        """
+        innerList=[]
+        outerList=[]
+        height=self.findMaxDepth(root)
+        rows=height
+        cols=int(math.pow(2,height)-1)
+        for i in range(rows):
+            innerList=[]
+            for j in range(cols):
+                innerList.append("")
+            outerList.append(innerList)
+        rows=rows-1
+        self.populate(root,rows,0,outerList)
+        return outerList
+    def findMaxDepth(self,root):
+        if root is None:
+            return 0
+        lh=self.findMaxDepth(root.left) 
+        rh=self.findMaxDepth(root.right)
+        return max(lh,rh)+1
+    def populate(self,root,height,level,outerList):
+        if root is None:
+            if level>height:
+                return
+            elif level<height:
+                cols=height-level+1
+                self.currCol+=int(math.pow(2,cols)-1)
+                return
+            else:
+                self.currCol+=1
+                return
+        self.populate(root.left,height,level+1,outerList)
+        if level<=height:
+            outerList[level][self.currCol] = "" + str(root.val) + ""
+            self.currCol+=1
+        self.populate(root.right,height,level+1,outerList)
+        return
+            
+        
+            
+                
+            
+                
+        
