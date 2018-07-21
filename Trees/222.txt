@@ -1,0 +1,39 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def countNodes(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if root is None:
+            return 0
+        l=self.findLeftDepth(root)
+        r=self.findRightDepth(root)
+        if l==r:
+            return int(pow(2,l)-1)
+        else:
+            return 1+self.countNodes(root.left)+self.countNodes(root.right)
+        
+    def findLeftDepth(self,root):
+        if root is None:
+            return 0
+        depth=0
+        while root:
+            depth+=1
+            root=root.left
+        return depth
+    def findRightDepth(self,root):
+        if root is None:
+            return 0
+        depth=0
+        while root:
+            depth+=1
+            root=root.right
+        return depth
+        
