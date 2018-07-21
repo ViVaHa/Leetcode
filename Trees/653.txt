@@ -1,0 +1,29 @@
+class Solution:
+    def findTarget(self, root, k):
+        """
+        :type root: TreeNode
+        :type k: int
+        :rtype: bool
+        """
+        values=[]
+        self.printInOrder(root,k,values)
+        start=0
+        end=len(values)-1
+        while start<end:
+            if values[start]+values[end]==k:
+                return True
+            elif values[start]+values[end]>k:
+                end=end-1
+            else:
+                start=start+1
+        return False
+    
+    
+    
+    def printInOrder(self,root,k,values):
+        if root is None:
+            return
+        self.printInOrder(root.left,k,values)
+        values.append(root.val)
+        self.printInOrder(root.right,k,values)
+        return values
