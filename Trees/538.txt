@@ -1,0 +1,26 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def convertBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: TreeNode
+        """
+        sumSoFar=[0]
+        sumSoFar=self.convertToGreaterTree(root,sumSoFar)
+        return root
+    
+    def convertToGreaterTree(self,root,sumSoFar):
+        if root is None:
+            return 0
+        self.convertToGreaterTree(root.right,sumSoFar)
+        root.val= root.val + sumSoFar[0]
+        sumSoFar[0]=root.val
+        self.convertToGreaterTree(root.left,sumSoFar)
+        return sumSoFar[0]
+        
