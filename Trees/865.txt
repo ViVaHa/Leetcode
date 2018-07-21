@@ -1,0 +1,46 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    sol=None
+    deepest=None
+    count=0
+    def subtreeWithAllDeepest(self, root):
+        """
+        :type root: TreeNode
+        :rtype: TreeNode
+        """
+        if root is None:
+            return None
+        if root.left is None and root.right is None:
+            return root
+        depth=self.findHeight(root)
+        self.findDeepestNode(root,depth,1)
+        if self.sol:
+            return self.sol
+        else:
+            return self.deepest
+    def findDeepestNode(self,root,depth,level):
+        if root is None:
+            return False
+        if level==depth:
+            self.deepest=root
+            return True
+        l=self.findDeepestNode(root.left,depth,level+1)
+        r=self.findDeepestNode(root.right,depth,level+1)
+        if l and r:
+            self.sol=root
+            return True
+        else:
+            return l or r
+        
+    def findHeight(self,root):
+        if root is None:
+            return 0
+        lh=self.findHeight(root.left)
+        rh=self.findHeight(root.right)
+        return max(lh,rh)+1
