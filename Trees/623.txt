@@ -1,0 +1,36 @@
+class Solution:
+    def addOneRow(self, root, v, d):
+        """
+        :type root: TreeNode
+        :type v: int
+        :type d: int
+        :rtype: TreeNode
+        """
+        if root is None:
+            return None
+        if root.left is None and root.right is None:
+            newRoot=TreeNode(v)
+            newRoot.left=root
+            return newRoot
+        if d==1:
+            newLeft=TreeNode(v)
+            newLeft.left=root
+            return newLeft
+            
+        self.formNewTree(root,v,d,False,None,1)
+        return root
+    def formNewTree(self,root,v,d,isLeft,prev,level):
+        if level == d:
+            newNode= TreeNode(v)
+            if isLeft:
+                newNode.left=prev.left
+                prev.left=newNode
+            else:
+                newNode.right=prev.right
+                prev.right=newNode
+            return
+        if root is None:
+            return
+        self.formNewTree(root.left,v,d,True,root,level+1)
+        self.formNewTree(root.right,v,d,False,root,level+1)
+            
