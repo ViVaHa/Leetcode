@@ -1,0 +1,36 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def levelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        from collections import deque
+        queue=deque()
+        innerList=[]
+        outerList=[]
+        if root is None:
+            return []
+        queue.append(root)
+        queue.append(-sys.maxsize)
+        while len(queue):
+            a=queue.popleft()
+            if a == -sys.maxsize:
+                outerList.append(innerList)
+                innerList=[]
+                if len(queue):
+                    queue.append(-sys.maxsize)
+            else:
+                if a.left:
+                    queue.append(a.left)
+                if a.right:
+                    queue.append(a.right)
+                innerList.append(a.val)
+        return outerList
+        
