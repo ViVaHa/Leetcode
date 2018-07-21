@@ -1,0 +1,27 @@
+class Solution:
+    rootFound=False
+    node=None
+    def isSubtree(self, s, t):
+        
+        """
+        :type s: TreeNode
+        :type t: TreeNode
+        :rtype: bool
+        """
+        if t is None and s is None:
+            return True
+        return self.equals(s,t)
+    def equals(self,s,t):
+        if s is not None:
+            return self.findSubTree(s,t) or self.equals(s.left,t) or self.equals(s.right,t)
+        return False
+    
+    def findSubTree(self,mainTree,subTree):
+        if mainTree is None and subTree is not None:
+            return False
+        if subTree is None and mainTree is not None:
+            return False
+        if subTree is None and mainTree is None:
+            return True
+        if mainTree.val == subTree.val:
+            return self.findSubTree(mainTree.left,subTree.left) and self.findSubTree(mainTree.right,subTree.right)
