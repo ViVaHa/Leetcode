@@ -1,0 +1,28 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    lowestLevel=0
+    retVal=None
+    def findBottomLeftValue(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if root is None:
+            return None
+        self.findBottom(root,1,True)
+        return self.retVal
+    def findBottom(self,root,level,isLeft):
+        if root is None:
+            return
+        if isLeft and level>self.lowestLevel:
+            self.lowestLevel=level
+            self.retVal=root.val
+        self.findBottom(root.left,level+1,True)
+        self.findBottom(root.right,level+1,True)
+        
