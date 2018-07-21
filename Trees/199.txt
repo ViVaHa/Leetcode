@@ -1,0 +1,33 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def rightSideView(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        if root is None:
+            return []
+        height=self.findDepth(root)
+        rightSideList=[0]*height
+        self.populateRightSideView(root,rightSideList,0)
+        return rightSideList
+    def findDepth(self,root):
+        if root is None:
+            return 0
+        lh=self.findDepth(root.left)
+        rh=self.findDepth(root.right)
+        return max(lh,rh)+1
+    
+    def populateRightSideView(self,root,rList,level):
+        if root is None:
+            return
+        self.populateRightSideView(root.left,rList,level+1)
+        rList[level]=root.val
+        self.populateRightSideView(root.right,rList,level+1)
+        
