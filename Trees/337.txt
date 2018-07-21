@@ -1,0 +1,45 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def rob(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if root is None:
+            return 0
+        if root.left is None and root.right is None:
+            return root.val
+        self.getMaximum(root)
+        return root.val
+    
+    def getMaximum(self,root):
+        if root is None:
+            return 0
+        if root.left is None and root.right is None:
+            return root.val
+        self.getMaximum(root.left)
+        self.getMaximum(root.right)
+        lh=rh=l=r=0
+        if root.left:
+            if root.left.left:
+                lh=root.left.left.val
+            if root.left.right:
+                lh+=root.left.right.val
+            l=root.left.val
+        if root.right:
+            if root.right.left:
+                rh=root.right.left.val
+            if root.right.right:
+                rh+=root.right.right.val
+            r=root.right.val
+        root.val=max(root.val+lh+rh,l+r)
+        return
+        
+        
+        
