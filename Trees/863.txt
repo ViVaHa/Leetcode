@@ -1,0 +1,57 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def distanceK(self, root, target, K):
+        """
+        :type root: TreeNode
+        :type target: TreeNode
+        :type K: int
+        :rtype: List[int]
+        """
+        if root is None:
+            return []
+        myList=[]
+        self.findNodes(root,0,target,K,myList)
+        return myList
+    
+    def findNodes(self,root,level,target,K,myList):
+        if root is None:
+            return (0,False)
+        if root.val==target.val:
+            if K==0:
+                myList.append(root.val)
+            self.getDownwardNodes(root.left,1,K,myList)
+            self.getDownwardNodes(root.right,1,K,myList)
+            return (1,True)
+        isPresentinL=isPresentinR=False
+        if root.left is not None:
+            (lh,isPresentinL)=self.findNodes(root.left,level+1,target,K,myList)
+        if root.right is not None:
+            (rh,isPresentinR)=self.findNodes(root.right,level+1,target,K,myList)
+        if isPresentinL:
+            if lh==K:
+                myList.append(root.val)
+            self.getDownwardNodes(root.right,0,K-lh-1,myList)
+            return lh+1,isPresentinL
+        elif isPresentinR:
+            if rh==K:
+                myList.append(root.val)
+            self.getDownwardNodes(root.left,0,K-rh-1,myList)
+            return rh+1,isPresentinR
+        return (0,False)
+    
+    def getDownwardNodes(self,root,connections,K,myList):
+        if connections>K:
+            return
+        if root is None:
+            return
+        if connections==K:
+            myList.append(root.val)
+        self.getDownwardNodes(root.left,connections+1,K,myList)
+        self.getDownwardNodes(root.right,connections+1,K,myList)
+        
