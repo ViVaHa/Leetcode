@@ -1,0 +1,37 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def levelOrderBottom(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        
+        myDict=dict()
+        listOfLists=[]
+        lists=[]
+        from collections import defaultdict
+        dictionary=defaultdict(list)
+        maxH=self.maxHeight(root)
+        self.populate(root,dictionary,1)
+        while maxH>0:
+            lists=dictionary[maxH]
+            listOfLists.append(lists)
+            maxH=maxH-1
+        return listOfLists
+    def populate(self,root,dictionary,level):
+        if root is None:
+            return
+        dictionary[level].append(root.val)
+        self.populate(root.left,dictionary,level+1)
+        self.populate(root.right,dictionary,level+1)
+        
+    def maxHeight(self,root):
+        if root is None:
+            return 0
+        return max(self.maxHeight(root.left),self.maxHeight(root.right))+1
