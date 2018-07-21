@@ -1,0 +1,28 @@
+class Solution:
+    def widthOfBinaryTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if root is None:
+            return 0
+        if root.left is None and root.right is None:
+            return 1
+        prev_level=0
+        pos=0
+        firstElement=0
+        ans=0
+        level=0
+        queue=[(root,level,pos)]
+        for root,level,pos in queue:
+            if root:
+                queue.append((root.left,level+1,pos*2))
+                queue.append((root.right,level+1,pos*2+1))
+                if prev_level !=level:
+                    prev_level=level
+                    firstElement=pos
+                if pos-firstElement+1>ans:
+                    ans=pos-firstElement+1
+        return ans
+        
+        
