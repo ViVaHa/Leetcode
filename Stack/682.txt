@@ -1,0 +1,36 @@
+class Solution:
+    def calPoints(self, ops):
+        """
+        :type ops: List[str]
+        :rtype: int
+        """
+        from collections import deque
+        s=deque()
+        size=len(ops)
+        points=0
+        i=0
+        while size>0:
+            if ops[i]=='C':
+                lastValid=s.pop()
+                points-=int(lastValid)
+            elif ops[i]=='D':
+                lastValid=s.pop()
+                now=2*int(lastValid)
+                points+=now
+                s.append(lastValid)
+                s.append(str(now))
+            elif ops[i]=='+':
+                last=s.pop()
+                lastBefore=s.pop()
+                now=int(last)+int(lastBefore)
+                s.append(lastBefore)
+                s.append(last)
+                s.append(now)
+                points+=now
+            else:
+                s.append(ops[i])
+                points+=int(ops[i])
+            i+=1
+            size-=1
+        return points
+                
