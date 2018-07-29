@@ -1,0 +1,33 @@
+class Solution:
+    def dailyTemperatures(self, temperatures):
+        """
+        :type temperatures: List[int]
+        :rtype: List[int]
+        """
+        if temperatures is None:
+            return []
+        from collections import deque
+        stack=deque()
+        indexStack=deque()
+        i=0
+        size=len(temperatures)
+        result=size*[0]
+        stack.append(temperatures[0])
+        indexStack.append(0)
+        i=1
+        while i<size or len(stack)>0:
+            if i<size:
+                if stack[-1]<temperatures[i]:
+                    while len(stack)>0 and stack[-1]<temperatures[i]:
+                        result[indexStack[-1]]=(i-indexStack[-1])
+                        indexStack.pop()
+                        stack.pop()
+                stack.append(temperatures[i])
+                indexStack.append(i)
+                i+=1
+            else:
+                result[indexStack[-1]]=0
+                stack.pop()
+                indexStack.pop()
+        return result
+                
