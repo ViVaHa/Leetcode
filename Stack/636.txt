@@ -1,0 +1,29 @@
+class Solution:
+    def exclusiveTime(self, n, logs):
+        """
+        :type n: int
+        :type logs: List[str]
+        :rtype: List[int]
+        """
+        if n==0:
+            return []
+        from collections import deque
+        stack=deque()
+        string=logs[0].split(":")
+        stack.append(int(string[0]))
+        prev=int(string[2])
+        i=1
+        result=[0]*n
+        while i < len(logs):
+            string=logs[i].split(":")
+            if string[1]=='start':
+                if len(stack)>0:
+                    result[stack[-1]]+=int(string[2])-prev
+                prev=int(string[2])
+                stack.append(int(string[0]))
+            else:
+                process=stack.pop()
+                result[process]+=int(string[2])-prev+1
+                prev=int(string[2])+1
+            i+=1
+        return result
