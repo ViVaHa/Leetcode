@@ -1,0 +1,37 @@
+class Solution:
+    def decodeString(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        if len(s)==0:
+            return ""
+        from collections import deque
+        stack=deque()
+        i=0
+        num=0
+        while i<len(s): 
+            if s[i].isalpha() or s[i]=='[':
+                if num>0:
+                    stack.append(num)
+                num=0
+                stack.append(s[i])
+            elif s[i].isdigit():
+                num=num*10+int(s[i])
+            else:
+                temp=""
+                while stack[-1]!='[':
+                    temp=stack[-1]+temp
+                    stack.pop()
+                stack.pop()
+                num=stack[-1]
+                stack.pop()
+                stack.append(temp*num)
+                num=0
+            i+=1
+        i=0
+        ans=""
+        for i in range(len(stack)):
+            if stack[i].isalpha:
+                ans+=stack[i]
+        return ans
